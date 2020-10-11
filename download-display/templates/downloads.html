@@ -1,0 +1,14 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if users %}
+  <h1>Hello there!</h1>
+  <h2>Username | Number of dowloads</h2>
+  <ul>
+  {% for u in users %}
+  	<li><h2>{{ u['user'] }} -- {{u['downloads']}}</h2></li>
+  {% endfor %}
+  	
+  </ul>
+{% else %}
+  <h1>Sorry, broken.</h1>
+{% endif %}
