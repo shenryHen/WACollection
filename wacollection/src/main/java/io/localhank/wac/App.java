@@ -55,9 +55,11 @@ public class App
         	try {
 	        	URL url = new URL("http://www.google.com");
 	        	String fileName = "google_" + Long.toString(downloads) + ".html";
-	            File destination = new File("dumpster/" + fileName);
+	            File destination = new File("./dumpster/" + fileName);
 	        	FileUtils.copyURLToFile(url, destination);
-	        	System.out.println("Downloading " + Long.toString(downloads+1) + "/10 items");
+	        	long fileSize = FileUtils.sizeOf(destination);
+	        	long dirSize = FileUtils.sizeOSfDirectory("./dumpster");
+	        	System.out.println("Downloading file " + Long.toString(downloads) + " - file size " + long.toString(fileSize));
 	        } catch (IOException e) {
 	        	e.printStackTrace();
 	        }
@@ -67,10 +69,10 @@ public class App
 	        if (downloads % 10 == 0){
 				data.put("user", username);
 				data.put("downloads", downloads);
+				data.put("dirSize", dirSize);
 				//asynchronously write data
 				ApiFuture<WriteResult> result = docRef.set(data);
 				System.out.println("Update time : " + result.get().getUpdateTime());
-				System.out.println("New dowload number is : " + Long.toString(downloads));
 	        }
         }
     }

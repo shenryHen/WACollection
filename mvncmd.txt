@@ -1,12 +1,11 @@
 mvn archetype:generate "-DgroupId=io.localhank.wac" "-DartifactId=wacollection" "-DarchetypeArtifactId=maven-archetype-quickstart" "-DarchetypeVersion=1.4" "-DinteractiveMode=false"
 
-mvn install dependency:copy-dependencies 
+mvn install
 
 java -cp ".\target\wacollection-1.0-SNAPSHOT.jar;target\*" io.localhank.wac.App
 
 $env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\henry\Documents\Side_Projects\WACollections\wacollection\credentials.json"
 $env:GCLOUD_PROJECT="downloader-292200"	
+$env:FLASK_ENV="development"
 
 mvn exec:java
-
-$env:FLASK_ENV="development"

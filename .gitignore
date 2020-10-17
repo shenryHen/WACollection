@@ -1,1 +1,9 @@
-*.json
+credentials*
+WAC.sublime-project
+WAC.sublime-workspace
+dumpster/
+lib/
+settings.xml
+target/
+tokens/
+download-display/__pycache__/
