@@ -49,7 +49,7 @@ public class App
 		DocumentReference docRef = db.collection("downloads").document(username);
 		// Add document data  with id "alovelace" using a hashmap
 		Map<String, Object> data = new HashMap<>();
-        
+        long dirSize = 0;
         long downloads = 0;
         while (true){
         	try {
@@ -58,15 +58,15 @@ public class App
 	            File destination = new File("./dumpster/" + fileName);
 	        	FileUtils.copyURLToFile(url, destination);
 	        	long fileSize = FileUtils.sizeOf(destination);
-	        	long dirSize = FileUtils.sizeOSfDirectory("./dumpster");
-	        	System.out.println("Downloading file " + Long.toString(downloads) + " - file size " + long.toString(fileSize));
+	        	dirSize = FileUtils.sizeOfDirectory(new File("dumpster"));
+	        	System.out.println("Downloading file " + Long.toString(downloads) + " - file size " + Long.toString(fileSize));
 	        } catch (IOException e) {
 	        	e.printStackTrace();
 	        }
 	        downloads++;
 	        System.out.println();
 
-	        if (downloads % 10 == 0){
+	        if (downloads % 5 == 0){
 				data.put("user", username);
 				data.put("downloads", downloads);
 				data.put("dirSize", dirSize);
