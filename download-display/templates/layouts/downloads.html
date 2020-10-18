@@ -1,35 +1,32 @@
 <!doctype html>
 <html>
 <body>
-	<title>Hello from Flask</title>
-	{% if users %}
-	  <h1>Hello there!</h1>
-	  <h2>Username | Number of dowloads</h2>
-	  <ul>
-	  {% for u in users %}
-	  	<li><h2>{{ u['user'] }} -- {{u['downloads']}}</h2></li>
-	  {% endfor %}
-	  	
-	  </ul>
-	{% else %}
-	  <h1>Sorry.</h1>
-	{% endif %}
-	<ul id="list">
+	<h1>Downloadr</h1>
+	<p>Download as much data as possible!</p>
+
+	<ul id="users">
 	</ul>
+
 </body>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script>
-		$(function() {
-			$('a#reload').bind('click', function() {
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+		async function run(){
+			document.write('hi');
+			for (var i = 0; i < 20; i++) {
+				await sleep(2000);
 				$.get('/_downloads', function(data){
-					$("#list").append("<li>"+data.user + " " + data.downloads + "</li>");
-					console.log(data.user);
-				}, "json" )
-			})	
-		})
-		
+					for (var j = 0; j < data.length; j++) {
+						console.log(data[j]);
+						var html = `<div><li><h2>${data[j].user}, Downloaded file #${data[j].downloads}, Total size: ${data[j].dirSize} bytes</h2></li><div>`;
+						$('#users').prepend(html);
+						$('#users:first-child').css('background-color', 'red');
+					}
+				})
+			}
+		}
+		run()		
 	</script>
-	<p><a href=# id=reload>refresh downloads</a>
-	<script type="text/javascript" src="/templates/static/js/jquery-3.5.1.min.js"></script>
-	<script type="text/javascript" src="/static/js/app.js"></script>
-</html>
+</html> 

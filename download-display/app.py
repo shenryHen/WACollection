@@ -8,8 +8,6 @@ from google.cloud import firestore
 
 # Project ID is determined by the GCLOUD_PROJECT environment variable
 db = firestore.Client() 
-users_ref = db.collection(u'downloads').document('Bronny James').get()
-print(users_ref.to_dict())
 
 callback_done = threading.Event()
 
@@ -27,10 +25,19 @@ def get_downloads():
         sleep(1)
 
 @app.route('/_downloads')
-def hello_world():
-    users_ref = db.collection(u'downloads').document('Bronny James').get()
-    return jsonify(users_ref.to_dict())
+def downloads():
+    data = []
+    users_ref = db.collection(u'downloads').stream()
+    for user in users_ref:
+        data.append(user.to_dict())
+    print(data)
+    return jsonify(data)
 
 @app.route('/')
-def downloads():
-    return render_template('layouts/downloads.html', users=None)
+def hello_world():
+    data = []
+    users_ref = db.collection(u'downloads').stream()
+    for user in users_ref:
+        data.append(user.to_dict())
+    user_downloads= len(data)
+    return render_template('layouts/downloads.html', user_downloads=user_downloads)
